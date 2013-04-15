@@ -17,5 +17,6 @@ class kstring {
         int compare(kstring* alien_string);
         int compare(char* alien_string);
         int adopt(char*);
+
 };
 #endif

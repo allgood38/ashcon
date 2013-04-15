@@ -14,6 +14,11 @@ ashcon::ashcon(Stream* new_line_in) {
                             malloc( sizeof(char) * (BUFFER_LENGTH + 1) );
     this->internal_buffer[BUFFER_LENGTH] = '\0'; //note the offset
     this->internal_buffer_len = BUFFER_LENGTH;
+
+    this->internal_func_list = (func_list*) malloc( sizeof(func_list) );
+    this->internal_func_list->num_args = 0;
+    this->internal_func_list->argv = (char**) 
+        malloc( sizeof(char*) * MAX_ARGUMENT_LIST );
 }
 
 /** Emulated printf
@@ -82,4 +87,61 @@ int ashcon::get_line() {
 
 char* ashcon::get_internal_buffer() {
     return this->internal_buffer;
+}
+
+// this is seriously sketchy in operation, but it works
+// should a memory leak be found, examine this first
+/** Splitline
+ *
+ * Populate the function list with words to be used as arguments in a
+ * function call.
+ */
+int ashcon::split_line(func_list* dest_list) {
+    int num_args = 0;
+    char word_in[this->MAX_WORD_LENGTH] = {'\0'};
+
+    while( strncmp(word_in, this->internal_buffer, 
+                this->BUFFER_LENGTH ) != 0 ) {
+
+        sscanf(this->internal_buffer, "%s %[^\n\t]",
+                word_in, this->internal_buffer);
+
+        this->printf("STORING: %d. %s\n\r", num_args, word_in);
+        this->internal_func_list->argv[num_args] = (char*) 
+            malloc( sizeof(char) * (strlen(word_in) + 1) );
+        this->internal_func_list->argv[num_args][strlen(word_in)] = '\0';
+        
+        strncpy(this->internal_func_list->argv[num_args], word_in,
+                strlen(word_in) );
+
+        this->printf("STORE SUCCESS\n\r");
+
+        num_args++;
+    }
+    this->internal_func_list->num_args = num_args;
+
+    return 0;
+}
+
+int ashcon::clear_func_list(func_list* marked_func_list) {
+    for( int i = 0; i < marked_func_list->num_args; i++ ) {
+        if( marked_func_list->argv[i] != NULL ) {
+            free(marked_func_list->argv[i]);
+        }
+    }
+    marked_func_list->num_args = 0;
+
+    return 0;
+}
+
+int ashcon::debug_func_list( func_list* marked_func_list ) {
+    for(int i = 0; i < marked_func_list->num_args; i++ ) {
+        if( marked_func_list->argv[i] != NULL ) {
+            this->printf("%s\n\r", marked_func_list->argv[i]);
+        }
+    }
+}
+
+ashcon::func_list* ashcon::get_internal_func_list() {
+    return this->internal_func_list;
 }

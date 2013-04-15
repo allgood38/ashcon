@@ -28,6 +28,12 @@ void test_string_from_console() {
     user_input = new kstring( mycon->get_internal_buffer() );
 
     mycon->printf("You typed this: %s \n\r", user_input->str);
+    mycon->split_line(mycon->get_internal_func_list());
+    mycon->printf("CHECK:\n\r");
+    mycon->debug_func_list( mycon->get_internal_func_list() );
+    mycon->clear_func_list( mycon->get_internal_func_list() );
+    mycon->printf("CHECK:\n\r");
+    mycon->debug_func_list( mycon->get_internal_func_list() );
 
     delete user_input;
 }

@@ -12,7 +12,7 @@ ashcon::ashcon(Stream* new_line_in) {
 
     this->internal_buffer = (char*)
                             malloc( sizeof(char) * (BUFFER_LENGTH + 1) );
-    this->internal_buffer[BUFFER_LENGTH] = '\0';
+    this->internal_buffer[BUFFER_LENGTH] = '\0'; //note the offset
     this->internal_buffer_len = BUFFER_LENGTH;
 }
 

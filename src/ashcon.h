@@ -20,12 +20,18 @@ class ashcon {
             char** argv;
         } func_list;
 
+        typedef struct {
+            char* id;
+            int (*func)(char** args);
+        } functions;
+
         char* internal_buffer;
         int internal_buffer_len;
 
         func_list* internal_func_list;
 
     public:
+        functions user_function_list[50];
         ashcon(Stream* new_line_in);
 
         int printf(char* fmt, ... );
@@ -38,6 +44,8 @@ class ashcon {
         int clear_func_list(func_list*);
         int debug_func_list(func_list*);
         func_list* get_internal_func_list();
+
+        int call( char* marked_id );
 };
 
 #endif

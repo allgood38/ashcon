@@ -31,9 +31,11 @@ void test_string_from_console() {
     mycon->split_line(mycon->get_internal_func_list());
     mycon->printf("CHECK:\n\r");
     mycon->debug_func_list( mycon->get_internal_func_list() );
-    mycon->clear_func_list( mycon->get_internal_func_list() );
-    mycon->printf("CHECK:\n\r");
-    mycon->debug_func_list( mycon->get_internal_func_list() );
+    /*mycon->clear_func_list( mycon->get_internal_func_list() );*/
+    /*mycon->printf("CHECK:\n\r");*/
+    /*mycon->debug_func_list( mycon->get_internal_func_list() );*/
+
+
 
     delete user_input;
 }

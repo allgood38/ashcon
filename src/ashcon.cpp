@@ -19,6 +19,7 @@ ashcon::ashcon(Stream* new_line_in) {
     this->internal_func_list->num_args = 0;
     this->internal_func_list->argv = (char**) 
         malloc( sizeof(char*) * MAX_ARGUMENT_LIST );
+
 }
 
 /** Emulated printf

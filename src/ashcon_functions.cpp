@@ -15,11 +15,28 @@ int ashcon::user_function_register( const char* id, int (*func)(char* args[]) ) 
 
     this->user_function_list[user_function_list_num].id = 
         (char*) malloc( sizeof(char) * (id_length + 1) );
+
+    this->printf("MALLOC RETURNS: %x\n\r"
+            "ID_LENGTH: %d\n\r", (int) 
+            this->user_function_list[user_function_list_num].id, id_length);
+
     this->user_function_list[user_function_list_num].id[id_length] = '\0';
 
-    strncpy(this->user_function_list[user_function_list_num].id, (char*) id,
+    this->printf("SOURCE: %x \n\r"
+                 "DESTIN: %s \n\r", id[0], 
+                 this->user_function_list[user_function_list_num].id[0]);
+
+    char* debug_put = strncpy( 
+            this->user_function_list[user_function_list_num].id, (char*) id,
             id_length );
+
     this->user_function_list[user_function_list_num].func = func;
+
+    this->printf("SOURCE: %x \n\r"
+                 "DESTIN: %s \n\r", 
+                 "DEBUG_PUT: %s \n\r\n\r\n\r", id[0], 
+                 this->user_function_list[user_function_list_num].id[0],
+                 debug_put);
 
     this->user_function_list_num++;
 

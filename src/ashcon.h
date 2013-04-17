@@ -17,7 +17,7 @@ class ashcon {
         int get_line();
         int get_line_splitline();
 
-        int user_function_register( char* id, int (*func)(char* args) );
+        int user_function_register( const char* id, int (*func)(char* args[]) );
         int user_function_call( char* id );
 
         // Debugging purposes
@@ -50,6 +50,10 @@ class ashcon {
             int (*func)(char* args[]);
         } user_function;
 
+        static const int USER_FUNCTION_LIST_MAX = 10;
+        user_function user_function_list[10];
+        int user_function_list_num; 
+        int user_function_list_debug();
 };
 
 #endif

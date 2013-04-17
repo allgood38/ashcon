@@ -1,14 +1,13 @@
 #include "sketch.h"
 
-void test_kcompare() {
-    // Nothing yet
-}
+int test_function(char* argv[]);
 
 void setup() {
     Serial.begin(115200);
 
     testk = new kstring( 100 );
     mycon = new ashcon(&Serial);
+    mycon->user_function_register("test", &test_function);
 
     pinMode(LED_PIN, OUTPUT);
 
@@ -16,12 +15,14 @@ void setup() {
 }
 
 void loop() {
+    mycon->user_function_list_debug();
 
     mycon->printf("> ");
     mycon->get_line();
     mycon->get_line_splitline();
     /*mycon->command_arg_append("This is a test");*/
     /*mycon->command_arg_append("Another string");*/
+
 
     mycon->command_arg_dump_debug();
     mycon->command_arg_clear();
@@ -32,3 +33,6 @@ void loop() {
     /*while( true ) delay( 100 );*/
 }
 
+int test_function(char* argv[]) {
+    Serial.println("The test function has been activated");
+}

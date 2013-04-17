@@ -17,6 +17,8 @@ ashcon::ashcon(Stream* new_line_in) {
     // NOTE THIS!! Forget to do this and everything goes wrong!
     this->command_arg_num = 0;
     this->command_arg_init();
+
+    this->user_function_list_num = 0;
 }
 
 /** Emulated printf
